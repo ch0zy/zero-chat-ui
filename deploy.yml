@@ -1,0 +1,51 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      # ── Vercel ───────────────────────────────────────────────────────────────
+      # To enable: add VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID
+      # as repository secrets in GitHub → Settings → Secrets and variables
+      #
+      # - name: Deploy to Vercel
+      #   uses: amondnet/vercel-action@v25
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+      #     vercel-args: ${{ github.ref == 'refs/heads/main' && '--prod' || '' }}
+
+      # ── Netlify ──────────────────────────────────────────────────────────────
+      # To enable: add NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID
+      # as repository secrets in GitHub → Settings → Secrets and variables
+      #
+      # - name: Deploy to Netlify
+      #   uses: nwtgck/actions-netlify@v3
+      #   with:
+      #     publish-dir: ./dist
+      #     production-branch: main
+      #     production-deploy: ${{ github.ref == 'refs/heads/main' }}
+      #   env:
+      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
