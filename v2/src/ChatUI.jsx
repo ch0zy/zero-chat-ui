@@ -140,6 +140,7 @@ export default function ChatUI() {
         ::-webkit-scrollbar-thumb{background:${brand[20]};border-radius:2px}
         textarea{resize:none;outline:none;border:none;background:transparent;font-family:${font}}
         input{outline:none;border:none;background:transparent;font-family:${font}}
+        button{font-family:${font}}
       `}</style>
       <div style={{fontFamily:font,display:"flex",height:"100vh",background:color.bgOverlay,overflow:"hidden"}}>
 
